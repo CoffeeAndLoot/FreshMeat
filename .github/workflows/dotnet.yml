@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Publish
 
 on:
   push:
@@ -10,21 +10,40 @@ on:
     branches: [ "main" ]
 
 jobs:
+  release:
+    name: Release
+
   build:
 
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
-      run: dotnet build --no-restore --configuration Release
-    - name: Package
-      run: dotnet pack --no-build --configuration Release
+      shell: bash
+      run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="FreshMeat-$tag"
+          # Build everything
+          dotnet publish src/FreshMeat/FreshMeat.csproj --runtime "linux" -c Release -o "$release_name"
+          # Pack files          
+          7z a -tzip "${release_name}.zip" "./${release_name}/*"
+          # Delete output directory
+          rm -r "$release_name"
+
     - name: Publish
-      run: dotnet nuget push FreshMeat/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "App*"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
