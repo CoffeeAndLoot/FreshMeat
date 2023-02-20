@@ -7,9 +7,6 @@ on:
   paths-ignore:
     - 'README.md'
 
-env:
-  DOTNET_VERSION: '7.0.x'
-
 jobs:
   dotnetCi:
 
@@ -21,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: 7.0.x
 
       - name: Restore dependencies
         run: dotnet restore
