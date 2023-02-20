@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
 jobs:
   build:
 
@@ -26,7 +27,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          tag="$(git describe --tags --abbrev=0)"
+          tag=$(git describe --tags --abbrev=0)
+          echo "Tag: $tag"
           release_name="FreshMeat-${tag}"
           dotnet publish FreshMeat/FreshMeat.csproj -c Release -o "$release_name"        
           7z a -tzip "${release_name}.zip" "./${release_name}/*"
@@ -35,6 +37,6 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "FreshMeat*"
+          files: "FreshMeat-*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
