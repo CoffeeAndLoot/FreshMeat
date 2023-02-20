@@ -22,7 +22,7 @@ jobs:
 
     - name: Build
       shell: bash
-      run:  |
+      run: |
         tag=$(git describe --tags --abbrev=0)
         release_name="FreshMeat-$tag"
         dotnet publish src/FreshMeat/FreshMeat.csproj --framework netcoreapp7.0 --runtime "linux" -c Release -o "$release_name"        
