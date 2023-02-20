@@ -20,8 +20,14 @@ public class AwakenedPoeTrade
 
 public class Ninja
 {
-    [JsonProperty("beastApiUrl")]
-    public string BeastApiUrl { get; set; } = "https://poe.ninja/api/data/itemoverview?league=Sanctum&type=Beast";
+    [JsonProperty("ninjaBaseUrl")]
+    public string BaseUrl { get; set; } = "https://poe.ninja/api/data/itemoverview";
+
+    [JsonProperty("league")]
+    public string League { get; set; } = "Sanctum";
+
+    [JsonProperty("type")]
+    public string Type { get; set; } = "Beast";
 }
 
 public class FreshMeatSettings
@@ -37,6 +43,9 @@ public class FreshMeatSettings
 
     [JsonProperty("maxResults")]
     public int MaxResults { get; set; } = 0;
+
+    [JsonProperty("league")]
+    public string League { get; set; } = "Standard";
 }
 
 public enum Currency { Chaos, Exalted, Divine }

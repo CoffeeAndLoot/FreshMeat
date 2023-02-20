@@ -5,7 +5,7 @@ namespace FreshMeat.Services;
 public static class APoeTService
 {
     //load AwakenedPoE Trade config file
-    public static async Task<APoeTConfig?> LoadAwakenedPoeTradeConfig(SettingsModel? userSettings)
+    public static APoeTConfig? LoadAwakenedPoeTradeConfig(SettingsModel? userSettings)
     {
         try
         {
@@ -16,7 +16,7 @@ public static class APoeTService
             }
 
             CloseAwakenedPoeTrade();
-            var aPoeTConfigJsonText = await File.ReadAllTextAsync(userSettings.AwakenedPoeTrade.UserConfigPath);
+            var aPoeTConfigJsonText = File.ReadAllText(userSettings.AwakenedPoeTrade.UserConfigPath);
             var aPoeTConfig = JsonConvert.DeserializeObject<APoeTConfig>(aPoeTConfigJsonText);
             return aPoeTConfig;
         }
@@ -50,10 +50,11 @@ public static class APoeTService
         }
     }
 
-    private static async Task SaveAwakenedPoeTradeConfig(SettingsModel? userSettings, APoeTConfig aPoeTConfig)
+    private static void SaveAwakenedPoeTradeConfig(SettingsModel? userSettings, APoeTConfig aPoeTConfig)
     {
         try
         {
+            Thread.Sleep(4000);
             if (userSettings == null)
             {
                 Log.Error("User settings are null and could not be applied to Awakened PoE Trade config.");
@@ -61,7 +62,7 @@ public static class APoeTService
             }
 
             var serializeObject = JsonConvert.SerializeObject(aPoeTConfig, Formatting.Indented);
-            await File.WriteAllTextAsync(userSettings.AwakenedPoeTrade.UserConfigPath, serializeObject);
+            File.WriteAllText(userSettings.AwakenedPoeTrade.UserConfigPath, serializeObject);
             var process = StartAwakenedPoeTrade(userSettings);
             if (process == null) Log.Error("Awakened PoE Trade process is null and could not be started.");
             Log.Debug("Awakened PoE Trade process started: {processId}.", process?.Id);
@@ -72,7 +73,7 @@ public static class APoeTService
         }
     }
 
-    public static async Task ApplyNinjaBeastDataToAwakenedPoeTradeConfig(NinjaResponse? ninjaResponse, SettingsModel? userSettings,
+    public static void ApplyNinjaBeastDataToAwakenedPoeTradeConfig(NinjaResponse? ninjaResponse, SettingsModel? userSettings,
         APoeTConfig aPoeTConfig)
     {
         try
@@ -85,19 +86,29 @@ public static class APoeTService
 
             var lines = ninjaResponse.Lines;
             var initLineId = 1;
-            foreach (var line in lines.Where(line => line.ChaosValue > userSettings.FreshMeatSettings.LowerLimit))
+            foreach (var line in lines.Where(line => line.ChaosValue > userSettings.FreshMeatSettings.LowerLimit &&
+                                                     (line.LowConfidenceSparkline.TotalChange < 100.0 || line.ListingCount > 10)
+                                                     ))
             {
+
+                var name = line.Name;
+                var chaosValue = line.ChaosValue;
+                var listingCount = line.ListingCount;
+                var lowConfidenceSparkline = line.LowConfidenceSparkline;
+                var totalChange = lowConfidenceSparkline.TotalChange;
+                name = $"{name} {(int)chaosValue}c | {listingCount} Listed | {totalChange} %Change";
+
                 var beastWidget = aPoeTConfig.Widgets.Find(x => x.WmTitle == "Beast");
                 beastWidget?.Entries.Add(new Entry
                 {
                     Id = initLineId++,
                     Text = line.Name,
-                    Name = line.Name + " " + (int)line.ChaosValue + "c",
+                    Name = name,
                     Hotkey = null!
                 });
             }
 
-            await SaveAwakenedPoeTradeConfig(userSettings, aPoeTConfig);
+            SaveAwakenedPoeTradeConfig(userSettings, aPoeTConfig);
         }
         catch (Exception e)
         {

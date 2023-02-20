@@ -51,15 +51,16 @@ location: C:\Users\{username}\AppData\Roaming\awakened-poe-trade\apt-data\config
 
 It will automatically close Awakened PoE Trade, update the Beast widget with the latest pricing, and then restart Awakened PoE Trade once the update is complete.
 
+Note: League selection is based upon Awakened PoE Trade configuration. If you have Standard league selected in Awakened PoE Trade, then Standard league will be used for the pricing. If you have a different league selected, then that league will be used for the pricing.
 
 ## Known Issues / Limitations
 * English language only.
-* Only supports the Sanctum league (league configuration in a future update).
-* Only creates beasts whose price is greater than 9 chaos orb.
-* Overwrites the existing "Beast" widget in Awakened PoE Trade with the new entries.
+* ~~Only supports the Sanctum league (league configuration in a future update).~~
+* Only creates beasts whose price is greater than 9 chaos orbs.
+* Overwrites the existing "Beast" entries in Awakened PoE Trade with the new entries.
 
 
 ## Future Enhancements
-* Add support for league selection.
+* ~~Add support for league selection.~~
 * Add support for other languages.
 * Add a UI to configure the application.

@@ -7,7 +7,7 @@ public static class FreshMeatServices
     internal static readonly string FreshMeatSettingsPath =
         $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\FreshMeat";
 
-    public static async Task<SettingsModel?> LoadUserSettings()
+    public static SettingsModel? LoadUserSettings()
     {
         try
         {
@@ -18,13 +18,13 @@ public static class FreshMeatServices
                 var newSettings = JsonConvert.SerializeObject(settings, Formatting.Indented);
                 //create settings file
                 Directory.CreateDirectory(FreshMeatSettingsPath);
-                await File.WriteAllTextAsync(FreshMeatSettingsPath + "\\settings.json", newSettings);
+                File.WriteAllText(FreshMeatSettingsPath + "\\settings.json", newSettings);
                 Log.Information("FreshMeat settings file created.");
             }
 
             //read settings file
             var settingsJson = FreshMeatSettingsPath + "\\settings.json";
-            var settingsJsonText = await File.ReadAllTextAsync(settingsJson);
+            var settingsJsonText = File.ReadAllText(settingsJson);
             Log.Debug("FreshMeat settings file read.");
             settings = JsonConvert.DeserializeObject<SettingsModel>(settingsJsonText);
             return settings;
