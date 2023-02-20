@@ -26,8 +26,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          #tag="$(git describe --tags --abbrev=0)"
-          release_name="FreshMeat-beta"
+          tag="$(git describe --tags --abbrev=0)"
+          release_name="FreshMeat-${tag}"
           dotnet publish FreshMeat/FreshMeat.csproj -c Release -o "$release_name"        
           7z a -tzip "${release_name}.zip" "./${release_name}/*"
           rm -r "$release_name"
