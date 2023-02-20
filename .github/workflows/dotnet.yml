@@ -12,26 +12,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
-    - run: dotnet restore
 
-    - name: Build
-      shell: bash
-      run: |
-        tag=$(git describe --tags --abbrev=0)
-        release_name="FreshMeat-$tag"
-        dotnet publish src/FreshMeat/FreshMeat.csproj --framework netcoreapp7.0 --runtime "linux" -c Release -o "$release_name"        
-        7z a -tzip "${release_name}.zip" "./${release_name}/*"
-        rm -r "$release_name"
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Publish
-      uses: softprops/action-gh-release@v1
-      with:
+      - name: Build
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="FreshMeat-$tag"
+          dotnet publish src/FreshMeat/FreshMeat.csproj --framework netcoreapp7.0 --runtime "linux" -c Release -o "$release_name"        
+          7z a -tzip "${release_name}.zip" "./${release_name}/*"
+          rm -r "$release_name"
+
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
         files: "FreshMeat*"
-      env:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
