@@ -26,7 +26,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          tag=$(git describe --tags --abbrev=0)
+          tag="$(git describe --tags --abbrev=0)"
           release_name="FreshMeat-$tag"
           dotnet publish src/FreshMeat/FreshMeat.csproj --framework netcoreapp7.0 --runtime "linux" -c Release -o "$release_name"        
           7z a -tzip "${release_name}.zip" "./${release_name}/*"
