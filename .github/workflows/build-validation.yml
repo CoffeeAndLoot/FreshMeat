@@ -2,14 +2,13 @@ name: dotnetCi
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
-  paths-ignore:
-    - 'README.md'
+    branches: [ "main" ]
+
 
 jobs:
-  dotnetCi:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -19,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '7.0.x'
+          dotnet-version: 7.0.x
 
       - name: Restore dependencies
         run: dotnet restore
