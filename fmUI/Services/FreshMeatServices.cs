@@ -1,13 +1,18 @@
-﻿using System.Net;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using fmUI.Models.App;
+using Newtonsoft.Json;
+using Serilog;
 
-namespace FreshMeat.Services;
+namespace fmUI.Services;
 
 public static class FreshMeatServices
 {
-    internal static readonly string FreshMeatSettingsPath =
+    private static readonly string FreshMeatSettingsPath =
         $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\FreshMeat";
 
-    public static SettingsModel? LoadUserSettings()
+    public static async Task<SettingsModel?> LoadUserSettings()
     {
         try
         {
@@ -18,13 +23,13 @@ public static class FreshMeatServices
                 var newSettings = JsonConvert.SerializeObject(settings, Formatting.Indented);
                 //create settings file
                 Directory.CreateDirectory(FreshMeatSettingsPath);
-                File.WriteAllText(FreshMeatSettingsPath + "\\settings.json", newSettings);
+                await File.WriteAllTextAsync(FreshMeatSettingsPath + "\\settings.json", newSettings);
                 Log.Information("FreshMeat settings file created.");
             }
 
             //read settings file
             var settingsJson = FreshMeatSettingsPath + "\\settings.json";
-            var settingsJsonText = File.ReadAllText(settingsJson);
+            var settingsJsonText = await File.ReadAllTextAsync(settingsJson);
             Log.Debug("FreshMeat settings file read.");
             settings = JsonConvert.DeserializeObject<SettingsModel>(settingsJsonText);
             return settings;
@@ -43,6 +48,20 @@ public static class FreshMeatServices
             if (!File.Exists(FreshMeatSettingsPath + "\\settings.json")) return;
             File.Delete(FreshMeatSettingsPath + "\\settings.json");
             Log.Information("FreshMeat settings file deleted.");
+        }
+        catch (Exception e)
+        {
+            Log.Error(e.Message);
+        }
+    }
+
+    public static async Task SaveUserSettings(SettingsModel? settings)
+    {
+        try
+        {
+            var newSettings = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            await File.WriteAllTextAsync(FreshMeatSettingsPath + "\\settings.json", newSettings);
+            Log.Information("FreshMeat settings file saved.");
         }
         catch (Exception e)
         {

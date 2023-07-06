@@ -1,6 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using fmUI.Models.APoET;
+using fmUI.Models.App;
+using fmUI.Models.Ninja;
+using Newtonsoft.Json;
+using Serilog;
 
-namespace FreshMeat.Services;
+namespace fmUI.Services;
 
 public static class APoeTService
 {
@@ -84,29 +93,28 @@ public static class APoeTService
                 return;
             }
 
-            var lines = ninjaResponse.Lines;
+            //var lines = ninjaResponse.Lines;
             var initLineId = 1;
-            foreach (var line in lines.Where(line => line.ChaosValue > userSettings.FreshMeatSettings.LowerLimit &&
-                                                     (line.LowConfidenceSparkline.TotalChange < 100.0 || line.ListingCount > 10)
-                                                     ))
-            {
-
-                var name = line.Name;
-                var chaosValue = line.ChaosValue;
-                var listingCount = line.ListingCount;
-                var lowConfidenceSparkline = line.LowConfidenceSparkline;
-                var totalChange = lowConfidenceSparkline.TotalChange;
-                name = $"{name} {(int)chaosValue}c | {listingCount} Listed | {totalChange} %Change";
-
-                var beastWidget = aPoeTConfig.Widgets.Find(x => x.WmTitle == "Beast");
-                beastWidget?.Entries.Add(new Entry
+            var beastWidget = aPoeTConfig.Widgets.Find(x => x.WmTitle == "Beast");
+            var beasts = ninjaResponse.Lines.Where(w => w.ChaosValue >= 10.0);
+            if (ninjaResponse?.Lines != null)
+                foreach (var line in beasts)
                 {
-                    Id = initLineId++,
-                    Text = line.Name,
-                    Name = name,
-                    Hotkey = null!
-                });
-            }
+                    var name = line.Name;
+                    var chaosValue = line.ChaosValue;
+                    var listingCount = line.ListingCount;
+                    var lowConfidenceSparkline = line.LowConfidenceSparkline;
+                    var totalChange = lowConfidenceSparkline.TotalChange;
+                    name = $"{name} {(int)chaosValue}c | {listingCount} Listed";
+
+                    beastWidget?.Entries.Add(new Entry
+                    {
+                        Id = initLineId++,
+                        Text = line.Name,
+                        Name = name,
+                        Hotkey = null!
+                    });
+                }
 
             SaveAwakenedPoeTradeConfig(userSettings, aPoeTConfig);
         }

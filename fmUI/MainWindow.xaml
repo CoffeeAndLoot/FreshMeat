@@ -1,0 +1,117 @@
+﻿<Window x:Class="fmUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="FreshMeat"
+        Width="410"
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        Loaded="MainWindow_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="120" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <Label x:Name="AppTitle"
+               Grid.Row="0"
+               Grid.Column="0"
+               Content="FreshMeat"
+               HorizontalAlignment="Left"
+               Margin="10,10,0,0"
+               VerticalAlignment="Top"
+               FontSize="24">
+        </Label>
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="10">
+
+            <Label
+                Content="PoE Server Selection">
+            </Label>
+
+            <ComboBox
+                Name="CmbServerSelection"
+                VerticalAlignment="Center">
+            </ComboBox>
+        </StackPanel>
+
+        <WrapPanel
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Margin="10">
+            <Label Content="Awakened PoE Trade - Application Path" Width="400" />
+            <TextBox x:Name="txtAPoeTAppPath" Text="TextBox" Width="300" />
+            <Button
+                x:Name="btnAPoeTAppPath"
+                Content="Browse"
+                Click="btnAPoeTAppPath_Click" />
+        </WrapPanel>
+
+        <WrapPanel
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Margin="10">
+            <Label Content="Awakened PoE Trade - Config File Path" Width="400" />
+            <TextBox x:Name="txtAPoeTPath" Text="TextBox" Width="300" />
+            <Button
+                x:Name="btnAPoeTPath"
+                Content="Browse"
+                Click="btnAPoeTPath_Click" />
+        </WrapPanel>
+
+        <WrapPanel
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Margin="10,0,0,0">
+            <ListView x:Name="LogMessages"
+                      Height="120"
+                      Width="380"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
+
+            </ListView>
+
+        </WrapPanel>
+
+        <Button
+            Name="btnSaveSettings"
+            Grid.Row="5"
+            Grid.Column="0"
+            Content="Save Settings"
+            Margin="5"
+            VerticalAlignment="Center"
+            Click="btnSaveSettings_Click">
+        </Button>
+
+        <Button
+            Name="BtnSync"
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="5"
+            VerticalAlignment="Center"
+            Click="BtnSync_OnClick">
+            Sync
+        </Button>
+    </Grid>
+
+</Window>

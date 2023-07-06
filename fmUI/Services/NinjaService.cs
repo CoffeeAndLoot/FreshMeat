@@ -1,7 +1,12 @@
-﻿using System.Net.Http.Headers;
+﻿using System;
+using System.Net.Http;
 using System.Web;
+using fmUI.Models.App;
+using fmUI.Models.Ninja;
+using Newtonsoft.Json;
+using Serilog;
 
-namespace FreshMeat.Services;
+namespace fmUI.Services;
 
 public static class NinjaService
 {
@@ -15,7 +20,7 @@ public static class NinjaService
             {
                 var uriBuilder = new UriBuilder(userSettings.Ninja.BaseUrl);
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                query["league"] = userSettings.Ninja.League;
+                query["league"] = userSettings.FreshMeatSettings.League;
                 query["type"] = userSettings.Ninja.Type;
                 uriBuilder.Query = query.ToString();
                 var response = client.GetAsync(uriBuilder.ToString()).Result;

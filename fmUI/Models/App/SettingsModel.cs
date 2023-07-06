@@ -1,4 +1,7 @@
-﻿namespace FreshMeat.Models;
+﻿using System;
+using Newtonsoft.Json;
+
+namespace fmUI.Models.App;
 
 public class SettingsModel
 {
@@ -24,7 +27,7 @@ public class Ninja
     public string BaseUrl { get; set; } = "https://poe.ninja/api/data/itemoverview";
 
     [JsonProperty("league")]
-    public string League { get; set; } = "Sanctum";
+    public string League { get; set; } = "Crucible";
 
     [JsonProperty("type")]
     public string Type { get; set; } = "Beast";

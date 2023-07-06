@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace FreshMeat.Models;
+namespace fmUI.Models.APoET;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Anchor
@@ -192,7 +193,7 @@ namespace FreshMeat.Models;
         public string HotkeyLocked { get; set; }
 
         [JsonProperty("showSeller")]
-        public bool? ShowSeller { get; set; }
+        public string ShowSeller { get; set; }
 
         [JsonProperty("searchStatRange")]
         public int? SearchStatRange { get; set; }
