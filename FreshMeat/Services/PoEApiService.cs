@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using fmUI.Models.GGG;
+using FreshMeat.Models.GGG;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace fmUI.Services;
+namespace FreshMeat.Services;
 
 public static class PoEApiService
 {

@@ -6,4 +6,4 @@ using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Display;
 
-namespace fmUI.Services;
+namespace FreshMeat.Services;

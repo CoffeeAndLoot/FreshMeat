@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using fmUI.Services;
+using FreshMeat.Services;
 using Microsoft.Win32;
 
-namespace fmUI
+namespace FreshMeat
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

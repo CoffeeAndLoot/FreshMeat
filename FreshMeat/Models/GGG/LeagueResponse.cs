@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace fmUI.Models.GGG;
+namespace FreshMeat.Models.GGG;
 
 public class League
 {

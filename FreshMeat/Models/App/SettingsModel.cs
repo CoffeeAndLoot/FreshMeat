@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace fmUI.Models.App;
+namespace FreshMeat.Models.App;
 
 public class SettingsModel
 {

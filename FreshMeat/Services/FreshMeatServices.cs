@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using fmUI.Models.App;
+using FreshMeat.Models.App;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace fmUI.Services;
+namespace FreshMeat.Services;
 
 public static class FreshMeatServices
 {

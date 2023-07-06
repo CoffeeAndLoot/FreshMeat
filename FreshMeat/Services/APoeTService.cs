@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using fmUI.Models.APoET;
-using fmUI.Models.App;
-using fmUI.Models.Ninja;
+using FreshMeat.Models.APoET;
+using FreshMeat.Models.App;
+using FreshMeat.Models.Ninja;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace fmUI.Services;
+namespace FreshMeat.Services;
 
 public static class APoeTService
 {

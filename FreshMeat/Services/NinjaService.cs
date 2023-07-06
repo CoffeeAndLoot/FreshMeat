@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web;
-using fmUI.Models.App;
-using fmUI.Models.Ninja;
+using FreshMeat.Models.App;
+using FreshMeat.Models.Ninja;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace fmUI.Services;
+namespace FreshMeat.Services;
 
 public static class NinjaService
 {

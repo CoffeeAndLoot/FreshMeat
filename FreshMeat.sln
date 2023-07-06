@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fmUI", "fmUI\fmUI.csproj", "{4FB1D71E-8B12-440B-A983-E3E3293BEFD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshMeat", "FreshMeat\FreshMeat.csproj", "{4FB1D71E-8B12-440B-A983-E3E3293BEFD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

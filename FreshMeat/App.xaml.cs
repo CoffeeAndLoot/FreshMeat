@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using fmUI.Models.App;
-using fmUI.Models.GGG;
-using fmUI.Services;
+using FreshMeat.Models.App;
+using FreshMeat.Models.GGG;
+using FreshMeat.Services;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace fmUI;
+namespace FreshMeat;
 
 /// <summary>
 /// Interaction logic for App.xaml

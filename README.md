@@ -63,4 +63,5 @@ Note: League selection is based upon Awakened PoE Trade configuration. If you ha
 ## Future Enhancements
 * ~~Add support for league selection.~~
 * Add support for other languages.
-* Add a UI to configure the application.
+* ~~Add a UI to configure the application.~~
+* Ability to ignore harvest beasts.
